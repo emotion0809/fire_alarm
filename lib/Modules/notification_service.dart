@@ -1,3 +1,5 @@
+import 'package:fire_alarm/Modules/auth_service.dart';
+import 'package:fire_alarm/Modules/database_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -18,8 +20,24 @@ class PushNotifications {
       provisional: false,
       sound: true,
     );
+
+  }
+
+  static Future getDeviceToken() async{
     final token = await _firebaseMessaging.getToken();
     print("device token: $token");
+    bool isUserLogin  = await AuthService.isLoggedIn();
+    if(isUserLogin){
+      await DatabaseService.saveUserToken(token!);
+      print("save to firestore");
+    }
+
+    _firebaseMessaging.onTokenRefresh.listen((event) async{
+      if(isUserLogin){
+        await DatabaseService.saveUserToken(token!);
+        print("save to firestore");
+      }
+    });
   }
 
   //顯示通知

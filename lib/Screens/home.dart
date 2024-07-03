@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fire_alarm/Modules/auth_service.dart';
 
+import '../Modules/notification_service.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -10,6 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    PushNotifications.getDeviceToken();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
