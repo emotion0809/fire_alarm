@@ -141,12 +141,12 @@ class _LoginState extends State<SignUp> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text("Already have an account?"),
+                const Text("已經有帳號?"),
                 TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: const Text("login")),
+                    child: const Text("登入")),
               ],
             )
           ],

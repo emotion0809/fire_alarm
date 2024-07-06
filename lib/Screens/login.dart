@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Login",
+              "登入",
               style: TextStyle(fontWeight: FontWeight.w800, fontSize: 30),
             ),
             const SizedBox(
@@ -73,18 +73,18 @@ class _LoginState extends State<Login> {
                       }
                     });
                   },
-                  child: const Text("Login")),
+                  child: const Text("登入")),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Text("No account?"),
+                const Text("沒有帳號?"),
                 TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, "/signup");
                     },
-                    child: const Text("Register")),
+                    child: const Text("創建帳號")),
               ],
             )
           ],

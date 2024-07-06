@@ -20,7 +20,6 @@ class PushNotifications {
       provisional: false,
       sound: true,
     );
-
   }
 
   static Future<String> getDeviceToken() async{
