@@ -1,12 +1,14 @@
 import 'dart:convert';
+import 'package:fire_alarm/Modules/company_module.dart';
+import 'package:fire_alarm/Services/database_service.dart';
 import 'package:fire_alarm/screens/login.dart';
 import 'package:fire_alarm/screens/signup.dart';
 import 'package:fire_alarm/screens/home.dart';
-import 'package:fire_alarm/Modules/auth_service.dart';
+import 'package:fire_alarm/Services/auth_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'Modules/notification_service.dart';
+import 'Services/notification_service.dart';
 import 'firebase_options.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -45,6 +47,12 @@ void main() async{
   //關閉程式時接收訊息
   final RemoteMessage? message =
   await FirebaseMessaging.instance.getInitialMessage();
+
+  //取得公司清單
+  CompanyModule.companylist = await DatabaseService.getCompanys();
+
+  //取的當前使用者資料
+  await DatabaseService.getCurrentUser();
 
   runApp(const MyApp());
 }

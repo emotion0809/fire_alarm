@@ -1,5 +1,6 @@
+import 'package:fire_alarm/Services/database_service.dart';
 import 'package:flutter/material.dart';
-import 'package:fire_alarm/Modules/auth_service.dart';
+import 'package:fire_alarm/Services/auth_service.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -32,8 +33,7 @@ class _LoginState extends State<Login> {
               controller: emailController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  label: Text("Email"),
-                  hintText: "Enter your email"),
+                  hintText: "Email"),
             ),
             const SizedBox(
               height: 10,
@@ -42,8 +42,7 @@ class _LoginState extends State<Login> {
               controller: passwordController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  label: Text("Password"),
-                  hintText: "Enter your password"),
+                  hintText: "密碼"),
               obscureText: true,
             ),
             const SizedBox(
@@ -56,10 +55,12 @@ class _LoginState extends State<Login> {
                   onPressed: () async {
                     await AuthService.loginWithEmail(
                         emailController.text, passwordController.text)
-                        .then((value) {
+                        .then((value) async {
                       if (value == "Login Successful") {
                         ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Login Successful")));
+                            const SnackBar(content: Text("登入成功")));
+                        //取得當前使用者資料
+                        await DatabaseService.getCurrentUser();
                         Navigator.pushReplacementNamed(context, "/home");
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

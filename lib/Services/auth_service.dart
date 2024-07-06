@@ -1,3 +1,4 @@
+import 'package:fire_alarm/Modules/user_module.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
@@ -32,6 +33,12 @@ class AuthService {
   // 登出
   static Future logout() async {
     await FirebaseAuth.instance.signOut();
+    UserModule.currentUser = null;
+  }
+
+  //取得當前使用者
+  static Future<User?> getCurrentUser() async{
+    return FirebaseAuth.instance.currentUser;
   }
 
   // 確認是否登入

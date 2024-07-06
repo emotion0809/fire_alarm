@@ -1,5 +1,5 @@
-import 'package:fire_alarm/Modules/auth_service.dart';
-import 'package:fire_alarm/Modules/database_service.dart';
+import 'package:fire_alarm/Services/auth_service.dart';
+import 'package:fire_alarm/Services/database_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -23,21 +23,10 @@ class PushNotifications {
 
   }
 
-  static Future getDeviceToken() async{
+  static Future<String> getDeviceToken() async{
     final token = await _firebaseMessaging.getToken();
     print("device token: $token");
-    bool isUserLogin  = await AuthService.isLoggedIn();
-    if(isUserLogin){
-      await DatabaseService.saveUserToken(token!);
-      print("save to firestore");
-    }
-
-    _firebaseMessaging.onTokenRefresh.listen((event) async{
-      if(isUserLogin){
-        await DatabaseService.saveUserToken(token!);
-        print("save to firestore");
-      }
-    });
+    return token.toString();
   }
 
   //顯示通知
