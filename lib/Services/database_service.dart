@@ -70,7 +70,7 @@ class DatabaseService {
   }
 
   static Future updateMessageToken() async {
-    var messageToken = await PushNotifications.getDeviceToken();
+    var messageToken = await PushNotifications.getMessageToken();
     if (messageToken != UserModule.currentUser?.messageToken) {
       UserModule.currentUser = new UserModule(
           id: UserModule.currentUser!.id,

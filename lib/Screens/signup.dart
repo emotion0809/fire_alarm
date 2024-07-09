@@ -117,7 +117,7 @@ class _LoginState extends State<SignUp> {
                               const SnackBar(content: Text("帳號已成功創建")));
                           //儲存使用者資料到FireStore
                           User? user = await AuthService.getCurrentUser();
-                          var token = await PushNotifications.getDeviceToken();
+                          var token = await PushNotifications.getMessageToken();
                           await DatabaseService.saveUser(
                               user!, token, dropdownCompanyValue);
                           //切換頁面

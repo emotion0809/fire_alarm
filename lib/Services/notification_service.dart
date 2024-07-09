@@ -3,7 +3,11 @@ import 'package:fire_alarm/Services/database_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import '../../main.dart';
+
 class PushNotifications {
+  static bool isFire = false;
+
   static final _firebaseMessaging = FirebaseMessaging.instance;
   static final FlutterLocalNotificationsPlugin
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -22,7 +26,7 @@ class PushNotifications {
     );
   }
 
-  static Future<String> getDeviceToken() async{
+  static Future<String> getMessageToken() async{
     final token = await _firebaseMessaging.getToken();
     print("device token: $token");
     return token.toString();
@@ -34,16 +38,16 @@ class PushNotifications {
     required String body,
     required String payload,
   }) async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await _flutterLocalNotificationsPlugin
-        .show(0, title, body, notificationDetails, payload: payload);
+      const AndroidNotificationDetails androidNotificationDetails =
+      AndroidNotificationDetails('your channel id', 'your channel name',
+          channelDescription: 'your channel description',
+          importance: Importance.max,
+          priority: Priority.high,
+          ticker: 'ticker');
+      const NotificationDetails notificationDetails =
+      NotificationDetails(android: androidNotificationDetails);
+      await _flutterLocalNotificationsPlugin
+          .show(0, title, body, notificationDetails, payload: payload);
   }
 
   // 初始化 local notifications
@@ -72,4 +76,8 @@ class PushNotifications {
     _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
+  //關閉通知
+  static Future deleteMessageToken() async{
+    await _firebaseMessaging.deleteToken();
+  }
 }
